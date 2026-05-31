@@ -45,10 +45,13 @@ double-jump) · `✦` attack.
 
 ## How to play / win
 
-1. Head right past the drone (slash it or stomp it).
-2. Drop down and grab the glowing **double-jump core**.
-3. Use your new double-jump to reach the **locked gate** — it opens now that you have the ability.
-4. Climb the steps beyond it to the spinning **portal** to clear the level.
+A full-height wall splits the level; the only way across is the **gated door**,
+which won't open until you have the double-jump.
+
+1. From spawn, deal with the patrolling drone (slash it or stomp it from above).
+2. Jump up to grab the glowing **double-jump core** on your side of the wall.
+3. Head to the **gated door** at floor level — it unlocks now that you have the ability.
+4. Pass through to the spinning **portal** on the far side to clear the level.
 
 ## Project layout
 
@@ -63,7 +66,23 @@ NeonCitadel/
     Systems/     Palette, PixelArt, PhysicsCategory
     UI/          HUD, TouchControls
     Info.plist
+  TestHarness/                 # headless Python test harness (runs on any OS)
 ```
+
+## Testing without a Mac
+
+Because the game can't build on non-Apple platforms, there's a **headless Python
+test harness** under `TestHarness/` that validates the game's *logic and design*
+— jump physics, the double-jump ability rules, and a flood-fill proof that the
+level is winnable and the ability gate is a real barrier. It parses the actual
+Swift source for every shared constant, so it can't drift from the app.
+
+```sh
+cd TestHarness && python3 run_tests.py
+```
+
+No dependencies (Python 3.10+ stdlib). See `TestHarness/README.md` for details.
+This complements — but does not replace — running the real app in Xcode.
 
 ## Designing levels
 
@@ -75,6 +94,13 @@ X solid   . empty   P spawn   E enemy   C ability core   D gated door   G goal  
 
 Edit the `map` array — every row must be the same length — and the `LevelBuilder` turns it into
 physics tiles and entities. This is the seam to grow into multiple connected rooms.
+
+After editing the level or any tunable, run the **headless test harness** to confirm the level is
+still winnable and the ability gate still gates (see `TestHarness/README.md`):
+
+```sh
+cd TestHarness && python3 run_tests.py
+```
 
 ## Tuning the feel
 

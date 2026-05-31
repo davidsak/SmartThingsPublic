@@ -21,23 +21,28 @@ enum Level {
     static let tileSize: CGFloat = 32
 
     /// Vertical slice layout. Every row must be the same length.
+    ///
+    /// The wall in column 25 (rows 1–11) is a true barrier: the only way to the
+    /// right-hand side — and the goal — is through the door 'D' at floor level,
+    /// which requires the double-jump ability. The ability core 'C' sits on the
+    /// left side, reachable with the base single jump.
     static let map: [String] = [
-        "..................................................",
-        "..................................................",
-        "..................................................",
-        "............................................G.....",
-        "...........................................XXXXX..",
-        ".........................................bbX......",
-        ".......................................bbX........",
-        "..........................XXXXXXXXXXXXXXXXXXXXXXX.",
-        ".............C....................bbbb.bbbbb......",
-        "............XXX...................bbbb.bbbbb......",
-        ".................................bbbbb.bbbbb......",
-        "..P.....E...........................D.............",
-        "XXXXXXXXXXXXXXXXXX....XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-        "XXXXXXXXXXXXXXXXXX....XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        ".........................X........................",
+        ".........................X........................",
+        ".........................X........................",
+        ".........................X........................",
+        ".........................X........................",
+        ".........................X........................",
+        ".........................X........................",
+        ".........................X........................",
+        ".........................X........................",
+        ".........................X........................",
+        "............C............X........................",
+        ".........................X........................",
+        "..P.....E................D...................G....",
+        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     ]
 
     static var columns: Int { map.first?.count ?? 0 }

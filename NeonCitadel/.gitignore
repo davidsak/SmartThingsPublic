@@ -16,3 +16,7 @@ xcuserdata/
 .build/
 Packages/
 Package.resolved
+
+# Python bytecode (test harness)
+TestHarness/**/__pycache__/
+*.pyc
