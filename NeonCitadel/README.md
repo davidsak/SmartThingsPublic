@@ -40,6 +40,10 @@ open NeonCitadel/NeonCitadel.xcodeproj
    `com.example.NeonCitadel` — change it to something unique under your team).
 3. Press **⌘R**.
 
+**Getting it onto your own iPhone/iPad?** See **[RUN_ON_IOS.md](RUN_ON_IOS.md)** for the
+full step-by-step (free Apple ID signing, Developer Mode, trust prompt, wireless install,
+and troubleshooting). No Mac handy? You can play `WebPlaytest/play.html` in Safari right now.
+
 Tap to start, then: `◀ ▶` move · `▲` jump (tap again in mid-air after you grab the core to
 double-jump) · `✦` attack.
 

@@ -57,7 +57,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Neon Citadel — Web Playtest</title>
+<title>Neon Citadel</title>
+<!-- iOS "Add to Home Screen": launch full-screen like a native app. -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Neon Citadel">
+<meta name="theme-color" content="#0b0618">
+<!-- Home-screen icon: a tiny inline SVG (neon citadel sun), no extra files. -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect width='180' height='180' fill='%230b0618'/%3E%3Ccircle cx='90' cy='96' r='52' fill='%23ff69b4'/%3E%3Crect x='38' y='96' width='104' height='6' fill='%230b0618'/%3E%3Crect x='38' y='110' width='104' height='8' fill='%230b0618'/%3E%3Crect x='38' y='126' width='104' height='10' fill='%230b0618'/%3E%3Crect x='20' y='150' width='140' height='8' fill='%232de3e3'/%3E%3C/svg%3E">
 <style>
   :root { --cyan:#2de3e3; --pink:#ff69b4; }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
