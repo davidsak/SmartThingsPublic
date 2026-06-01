@@ -17,7 +17,7 @@ final class MenuScene: SKScene {
         bg.position = CGPoint(x: size.width / 2, y: size.height / 2)
         addChild(bg)
 
-        let title = SKLabelNode(text: "NEON CITADEL")
+        let title = SKLabelNode(text: "ASHEN VIGIL")
         title.fontName = "AvenirNextCondensed-Heavy"
         title.fontSize = 64
         title.fontColor = Palette.grid
@@ -32,7 +32,7 @@ final class MenuScene: SKScene {
         shadow.alpha = 0.8
         addChild(shadow)
 
-        let subtitle = SKLabelNode(text: "A SYNTHWAVE METROIDVANIA")
+        let subtitle = SKLabelNode(text: "A GOTHIC METROIDVANIA")
         subtitle.fontName = "Menlo-Bold"
         subtitle.fontSize = 18
         subtitle.fontColor = Palette.sun

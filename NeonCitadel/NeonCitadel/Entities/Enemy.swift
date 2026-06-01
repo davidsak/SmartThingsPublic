@@ -20,8 +20,7 @@ final class Enemy: SKSpriteNode {
     static func make(patrolWidth: CGFloat) -> Enemy {
         let frames = PixelArt.enemyFrames()
         let texture = frames[0]
-        let displaySize = CGSize(width: texture.size().width * PixelArt.scale,
-                                 height: texture.size().height * PixelArt.scale)
+        let displaySize = PixelArt.displaySize(for: texture, targetHeight: 36)
         let enemy = Enemy(texture: texture, color: .clear, size: displaySize)
         enemy.zPosition = 40
         enemy.name = "enemy"

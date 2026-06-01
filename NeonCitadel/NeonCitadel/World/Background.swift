@@ -12,7 +12,62 @@ import UIKit
 
 enum Background {
 
+    /// Layered gothic parallax built from the generated PNG backdrops. Each
+    /// layer is scaled to cover the view and pinned to the camera by GameScene.
+    /// Returns nil if the art isn't bundled, so callers fall back to the
+    /// procedural backdrop below.
+    private static func makeFromArt(for size: CGSize) -> SKNode? {
+        let names = ["bg_sky", "bg_spires", "bg_window", "bg_pillars"]
+        let textures = names.map { PixelArt.loadTexture($0) }
+        guard textures.allSatisfy({ $0 != nil }) else { return nil }
+
+        let node = SKNode()
+        node.zPosition = -1000
+        for (i, tex) in textures.compactMap({ $0 }).enumerated() {
+            let layer = SKSpriteNode(texture: tex)
+            // Cover-fit: scale so the layer fills the screen, keep aspect.
+            let s = max(size.width / tex.size().width,
+                        size.height / tex.size().height)
+            layer.setScale(s)
+            layer.position = .zero
+            layer.zPosition = CGFloat(-1000 + i)
+            node.addChild(layer)
+        }
+
+        // A faint candlelight vignette + drifting embers for atmosphere.
+        node.addChild(emberField(width: size.width, height: size.height, count: 22))
+        return node
+    }
+
+    private static func emberField(width: CGFloat, height: CGFloat, count: Int) -> SKNode {
+        let field = SKNode()
+        field.zPosition = -990
+        var rng = SystemRandomNumberGenerator()
+        for _ in 0..<count {
+            let ember = SKShapeNode(circleOfRadius: CGFloat.random(in: 0.8...2.0, using: &rng))
+            ember.fillColor = Palette.candle
+            ember.strokeColor = .clear
+            ember.blendMode = .add
+            ember.alpha = CGFloat.random(in: 0.2...0.6, using: &rng)
+            let x = CGFloat.random(in: -width/2...width/2, using: &rng)
+            let y = CGFloat.random(in: -height/2...height/2, using: &rng)
+            ember.position = CGPoint(x: x, y: y)
+            let rise = SKAction.moveBy(x: CGFloat.random(in: -10...10, using: &rng),
+                                       y: CGFloat.random(in: 30...70, using: &rng),
+                                       duration: Double.random(in: 3...6, using: &rng))
+            let fade = SKAction.sequence([.fadeAlpha(to: 0, duration: 0.01),
+                                          .fadeAlpha(to: ember.alpha, duration: 1.0)])
+            ember.run(.repeatForever(.sequence([.group([rise, fade]),
+                                                .move(to: ember.position, duration: 0)])))
+            field.addChild(ember)
+        }
+        return field
+    }
+
     static func make(for size: CGSize) -> SKNode {
+        // Prefer the generated gothic parallax backdrop if its art is bundled.
+        if let art = makeFromArt(for: size) { return art }
+
         let node = SKNode()
         node.zPosition = -1000
 

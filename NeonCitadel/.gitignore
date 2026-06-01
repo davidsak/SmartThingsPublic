@@ -20,3 +20,6 @@ Package.resolved
 # Python bytecode (test harness)
 TestHarness/**/__pycache__/
 *.pyc
+
+# Art: keep the source PNGs in Art/out, but not the dev-only scene composite
+Art/scene_preview.png

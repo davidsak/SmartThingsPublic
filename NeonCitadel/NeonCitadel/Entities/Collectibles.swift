@@ -12,8 +12,7 @@ final class AbilityPickup: SKSpriteNode {
 
     static func make() -> AbilityPickup {
         let texture = PixelArt.pickupTexture()
-        let displaySize = CGSize(width: texture.size().width * PixelArt.scale,
-                                 height: texture.size().height * PixelArt.scale)
+        let displaySize = PixelArt.displaySize(for: texture, targetHeight: 28)
         let node = AbilityPickup(texture: texture, color: .clear, size: displaySize)
         node.name = "pickup"
         node.zPosition = 45

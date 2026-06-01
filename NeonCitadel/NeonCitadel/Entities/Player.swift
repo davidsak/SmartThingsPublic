@@ -35,8 +35,9 @@ final class Player: SKSpriteNode {
     static func make() -> Player {
         let frames = PixelArt.playerFrames()
         let texture = frames[0]
-        let displaySize = CGSize(width: texture.size().width * PixelArt.scale,
-                                 height: texture.size().height * PixelArt.scale)
+        // Size by target height so procedural (10×12) and bundled PNG (16×24)
+        // art both render at the same in-world scale.
+        let displaySize = PixelArt.displaySize(for: texture, targetHeight: 56)
         let player = Player(texture: texture, color: .clear, size: displaySize)
         player.runFrames = frames
         player.zPosition = 50

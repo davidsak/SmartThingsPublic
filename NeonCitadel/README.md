@@ -1,27 +1,33 @@
-# Neon Citadel
+# Ashen Vigil
 
-An 80s synthwave **side-scrolling metroidvania** for iOS, built with **SpriteKit + Swift**.
-Pixel-art look (nearest-neighbour, neon palette, additive glow) with a modern,
-buttery 60 fps engine. This is a **playable vertical slice**: one explorable area
-that demonstrates the full core loop.
+A gothic **side-scrolling metroidvania** for iOS, built with **SpriteKit + Swift**.
+Blasphemous-inspired pixel-art look — a moonlit cathedral with a glowing rose window,
+crimson banners, candle-gold accents, a hooded penitent — on a modern, buttery 60 fps engine.
+This is a **playable vertical slice**: one explorable area that demonstrates the full core loop.
 
-![style: synthwave](https://img.shields.io/badge/style-synthwave-ff42b3)
-![engine: SpriteKit](https://img.shields.io/badge/engine-SpriteKit-1ce3e3)
+> Formerly "Neon Citadel" (synthwave). The folder/project/bundle id keep the old name to avoid
+> resigning churn; the game, art, and titles are now gothic.
+
+![style: gothic](https://img.shields.io/badge/style-gothic-961828)
+![engine: SpriteKit](https://img.shields.io/badge/engine-SpriteKit-e0b048)
 
 ## What's in the slice
 
 - **Character controller** — run, jump, **double-jump** (an unlockable ability), wall-free
   ground detection via downward ray-cast (no wall-jump bug), invulnerability frames, knockback.
-- **Combat** — melee slash (`✦`) that pops enemies; **stomp** enemies from above for a bounce.
-- **One enemy type** — a patrolling drone that damages on contact.
-- **The metroidvania loop** — grab the **double-jump core**, which both unlocks new traversal
-  *and* is the "key" that opens an **ability-gated door**. Reach the portal to clear the level.
+- **Combat** — melee strike (`✦`) that fells enemies; **stomp** from above for a bounce.
+- **One enemy type** — a patrolling wretch that damages on contact.
+- **The metroidvania loop** — claim the **relic** (double-jump), which both unlocks new traversal
+  *and* is the "key" that unseals an **ability-gated door**. Reach the portal to complete the vigil.
 - **Camera** that follows the player and clamps to the level bounds, with screen-shake on hits.
 - **HUD** — health pips, ability indicator, and banner messages.
-- **Touch controls** — on-screen D-pad + jump + attack, multi-touch aware.
-- **Synthwave backdrop** — gradient sky, banded "outrun" sun, perspective grid, twinkling stars.
-- **Zero binary assets** — every sprite is generated in code (`PixelArt.swift`), so the project
-  compiles and runs immediately. Swap in real sprite sheets later by editing that one file.
+- **Touch controls** — on-screen D-pad + jump + strike, multi-touch aware.
+- **Gothic backdrop** — layered parallax cathedral (moon + spires + rose window + pillars),
+  drifting candle embers.
+- **Real generated art with procedural fallback** — sprites + backdrops are real PNGs produced by
+  `Art/generate_art.py` (reproducible, version-controlled) and loaded from the asset catalog; if
+  the art is absent the engine falls back to code-drawn pixels, so it always runs. Swap in
+  hand-drawn art by replacing the PNGs (or editing the generator).
 
 ## Requirements
 
@@ -70,8 +76,28 @@ NeonCitadel/
     Systems/     Palette, PixelArt, PhysicsCategory
     UI/          HUD, TouchControls
     Info.plist
+    Assets.xcassets/Art/         # generated PNG sprite sheets + backdrops
+  Art/                         # reproducible art generator (Pillow) + ./out PNGs
   TestHarness/                 # headless Python test harness (runs on any OS)
+  WebPlaytest/                 # self-contained browser port (play.html)
 ```
+
+## Art pipeline
+
+The gothic art is **generated and reproducible**, not committed by hand alone:
+
+```sh
+cd Art && pip3 install Pillow && python3 generate_art.py   # writes ./out/*.png
+                                                           # + syncs the asset catalog
+cd ../WebPlaytest && python3 generate_play.py              # embeds art into play.html
+```
+
+`Art/generate_art.py` draws every sprite sheet (penitent, wretch, boss sentinel, tiles,
+relic) and the four parallax backdrop layers (sky/moon, spires, rose window, pillars) with
+Pillow, then copies them into `NeonCitadel/Assets.xcassets/Art/` as imagesets. The Swift
+engine (`PixelArt.loadTexture`/`sliceSheet`) loads these PNGs and **falls back to code-drawn
+pixels** if they're missing, so the project always runs. To use hand-drawn art, drop
+replacement PNGs into the asset catalog (same names) or edit the generator.
 
 ## Testing without a Mac
 
